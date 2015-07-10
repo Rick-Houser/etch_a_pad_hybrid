@@ -1,0 +1,16 @@
+#container{
+	width: 960px;
+	height: 960px;
+	overflow: auto;
+	margin: auto;
+}
+
+.row {
+	float:left;
+	background-color: blue;
+	border: 1px solid gray;
+}
+
+.col {
+	clear: both;
+}
