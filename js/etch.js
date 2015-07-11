@@ -2,44 +2,62 @@
 $(document).ready(function() {
 	gridSize = parseInt(prompt("Please enter a board size: (1-64)"))
 		if ( gridSize > 0 && gridSize < 65 ) {
-			cancel = false;  // ?????? want to allow cancel box
-			createGrid(gridSize);
+			for (var x = 1; x < gridSize; x++) {
+				for (var i = 1; i < gridSize; i++) {
+					$("<div class='row'></div>").appendTo("#container");
+				}; 
+				$("<div class='col'></div>").appendTo("#container");
+			};
+			// Calculate box size.
+			boxSize = $("#container").width() / gridSize - 2;
+
+			// Set box size.
+			$(".row").css({"width":boxSize, "height":boxSize});
+
 		} else { 
-			gridSize()
-			cancel = true; //??????? see krzoldakowski
-		}
+			alert("Invalid input. Refresh the page to try again.")
+		};
 });
 
-// Set grid size.
-function createGrid(gridSize) {
-	for (var n = 1; n < gridSize; n++) {
-		for (var i = 1; i < gridSize; i++) {
-			$("<div class='row'></div>").appendTo("#container");
-		};	
-		$("<div class='col'></div>").appendTo("#container");
-	};
+// Listen for mouse clicks.	
+$(document).ready(function() {	
 
-// Calculate box size.
-	boxSize = $("#container").width() / gridSize - 2
+	$(".gradient").click(function() {
+		$(".row").mouseenter(function() {
+		$(this).css("opacity", $(this).css("opacity") * 0.75);
+		});
+	});
 
-// Set box size.
-	$(".row").width(boxSize);
-	$(".row").height(boxSize);
-};
+	$(".trail").click(function() {
+		$(".row").hover(function() {
+			$(this).css("opacity", 0);
+		}, function () {
+			$(this).fadeTo('fast', 1);
+		});
+	});
 
-// Listen for user choosing other effects.
-// effect = $(".default")
-// $("button").click(function() {
-// 	if $(".black").click(function() {
-// 		effect = $(this) // Try this after button click and omitting the if/elsif/else  may need to change "this" to class name!!!!
-// 	});
-// });
+	$(".rainbow").click(function() {
+		$(".row").mouseenter(function() {
+			$(this).css("background", randomColor());
+		});
+	});
 
+	$(".clear").click(function() {
+		location.reload();
+	});
+});
 
-// // Mouse over action.
-// function drawEffect {
-// 	$(".row").mouseenter(function(){
-// 		$(this).addClass(effect);
-// 	});
-// };
+// Run default color if none chosen above.
+$(document).ready(function() {
+	effect = "default"
+	$(".row").mouseenter(function() {
+		$(this).addClass(effect);
+	})
+});
+
+// Calculates random color and prepends with #.
+function randomColor() {
+	return '#'+Math.floor(Math.random()*16777215).toString(16);
+}
+
 
